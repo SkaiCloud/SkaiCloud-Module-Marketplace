@@ -1,8 +1,8 @@
-# Marketplace
+# Module Marketplace
 
-Marketplace is the discovery and package-review surface for the SkaiCloud Network Solution Platform.
+Module Marketplace is the discovery and package-review surface for the SkaiCloud Network Solution Platform.
 
-## Version 0.1.2
+## Version 0.1.3
 
 This package provides a UI contract for:
 
@@ -18,4 +18,4 @@ The installable interface runs as static HTML, CSS, and JavaScript inside the ho
 
 ## Data ownership
 
-Marketplace owns no database tables, settings keys, or upload paths. It can be disabled with no data deletion.
+Module Marketplace owns no database tables, settings keys, or upload paths. It can be disabled with no data deletion.

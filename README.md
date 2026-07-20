@@ -1,21 +1,20 @@
-# SkaiCloud Marketplace Module
+# SkaiCloud Module Marketplace
 
-Signed, sandboxed Marketplace module for the SkaiCloud Network platform.
+Signed, sandboxed Module Marketplace for the SkaiCloud Network platform.
 
 ## Current release
 
-- Version: `0.1.2`
+- Version: `0.1.3`
 - Module key: `marketplace`
 - Publisher: `SkaiCloud Network LLC`
 - Runtime: host-controlled sandboxed iframe
 
 ## Install
 
-1. Download the signed module ZIP from [Releases](https://github.com/SkaiCloud/SkaiCloud-Module-Marketplace/releases).
-2. Register the public key in SkaiCloud under **Settings → Trusted publishers**.
-3. Set the publisher name exactly to `SkaiCloud Network LLC`.
-4. Upload the ZIP through **Automated Module Installer**.
-5. Select **Install Package**.
+1. Register the public key in SkaiCloud under **Settings → Trusted publishers**.
+2. Set the publisher name exactly to `SkaiCloud Network LLC`.
+3. Paste `https://github.com/SkaiCloud/SkaiCloud-Module-Marketplace` into **Automated Module Installer**, or choose the signed release ZIP.
+4. Use branch `main` and select **Install Package**.
 
 The installer performs archive inspection, compatibility validation, checksum comparison, RSA-SHA256 signature verification, sandbox extraction, backup, dry run, installation, and health checks in the backend.
 

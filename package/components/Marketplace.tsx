@@ -203,7 +203,7 @@ export default function Marketplace() {
       <header className="marketplace-header">
         <div>
           <p className="marketplace-eyebrow">Module catalog</p>
-          <h1 className="marketplace-title">Marketplace</h1>
+          <h1 className="marketplace-title">Module Marketplace</h1>
           <p className="marketplace-subtitle">
             Extend your workspace with reviewed modules built for SkaiCloud operations.
           </p>
