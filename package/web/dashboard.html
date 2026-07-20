@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="header">
+        <div>
+          <p class="eyebrow">Module catalog</p>
+          <h1>Marketplace</h1>
+          <p class="subtitle">Extend your workspace with reviewed modules built for SkaiCloud operations.</p>
+        </div>
+        <div class="summary" aria-label="Module summary">
+          <div><strong id="available-count">0</strong><span>Available</span></div>
+          <div><strong id="enabled-count">0</strong><span>Enabled</span></div>
+          <div><strong id="review-count">0</strong><span>In review</span></div>
+        </div>
+      </header>
+
+      <section class="controls" aria-label="Catalog controls">
+        <label class="search">
+          <span aria-hidden="true"></span>
+          <input id="search" type="search" placeholder="Search modules, publishers, or capabilities" aria-label="Search marketplace">
+        </label>
+        <div id="categories" class="categories" aria-label="Module categories"></div>
+      </section>
+
+      <section aria-labelledby="catalog-title">
+        <div class="section-head">
+          <h2 id="catalog-title">All modules</h2>
+          <span id="result-count"></span>
+        </div>
+        <div id="catalog" class="grid"></div>
+      </section>
+
+      <aside class="note">
+        Packages are inspected, trust-checked, and dry-run validated before installation. Uploaded host code is never executed.
+      </aside>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

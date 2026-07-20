@@ -1,0 +1,70 @@
+{
+  "manifestVersion": 1,
+  "key": "marketplace",
+  "name": "Marketplace",
+  "version": "0.1.2",
+  "description": "Discover, inspect, and manage trusted SkaiCloud module packages through the metadata-first review workflow.",
+  "compatibility": {
+    "minimumBuild": 6000,
+    "moduleApiVersion": 1
+  },
+  "navigation": {
+    "label": "Marketplace",
+    "path": "/dashboard/marketplace",
+    "category": "modules",
+    "icon": "briefcase",
+    "showInNavigation": true
+  },
+  "permissions": {
+    "accessKey": "marketplace",
+    "enabledByDefault": false,
+    "masterOnly": false
+  },
+  "data": {
+    "prismaModels": [],
+    "sqliteTables": [],
+    "appSettingsKeys": [],
+    "uploadPaths": []
+  },
+  "capabilities": {
+    "csvExport": false,
+    "csvImport": false,
+    "completeBackup": false,
+    "moduleRestore": false
+  },
+  "dependencies": {
+    "moduleKeys": []
+  },
+  "package": {
+    "routeEntry": "package/routes/marketplace.ts",
+    "componentEntry": "package/components/Marketplace.tsx",
+    "backupStrategy": "none",
+    "rollbackStrategy": "disable-only",
+    "requiredEnv": [],
+    "postInstallChecks": [
+      "Open /dashboard/marketplace",
+      "Confirm search and category filters update the catalog",
+      "Confirm package review actions do not execute uploaded code",
+      "Confirm the module can be disabled without deleting data"
+    ],
+    "healthChecks": [
+      {
+        "key": "dashboard",
+        "type": "dashboard-route"
+      },
+      {
+        "key": "runtime-script",
+        "type": "runtime-asset",
+        "path": "package/web/app.js"
+      }
+    ],
+    "publisher": "SkaiCloud Network LLC",
+    "checksum": "sha256:4d170444906a1a78e423b2e69ecbcb84760e407e002aede4727b0b0753c1cc00",
+    "signature": "package/SIGNATURE.txt",
+    "runtime": {
+      "mode": "sandboxed-iframe",
+      "dashboardEntry": "package/web/dashboard.html",
+      "dataResources": []
+    }
+  }
+}
