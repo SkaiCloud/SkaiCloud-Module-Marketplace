@@ -4,7 +4,7 @@ Signed, sandboxed Module Marketplace for the SkaiCloud Network platform.
 
 ## Current release
 
-- Version: `0.1.3`
+- Version: `0.1.4`
 - Module key: `marketplace`
 - Publisher: `SkaiCloud Network LLC`
 - Runtime: host-controlled sandboxed iframe

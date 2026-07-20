@@ -15,10 +15,19 @@
           <h1>Module Marketplace</h1>
           <p class="subtitle">Extend your workspace with reviewed modules built for SkaiCloud operations.</p>
         </div>
-        <div class="summary" aria-label="Module summary">
-          <div><strong id="available-count">0</strong><span>Available</span></div>
-          <div><strong id="enabled-count">0</strong><span>Enabled</span></div>
-          <div><strong id="review-count">0</strong><span>In review</span></div>
+        <div class="header-side">
+          <button id="command-status" class="connection checking" type="button" aria-live="polite" aria-label="Check SkaiCloud Network Command connection">
+            <span class="connection-dot" aria-hidden="true"></span>
+            <span class="connection-copy">
+              <strong id="command-status-label">Checking Command</strong>
+              <span id="command-status-detail">Secure catalog connection</span>
+            </span>
+          </button>
+          <div class="summary" aria-label="Module summary">
+            <div><strong id="available-count">0</strong><span>Available</span></div>
+            <div><strong id="enabled-count">0</strong><span>Enabled</span></div>
+            <div><strong id="review-count">0</strong><span>In review</span></div>
+          </div>
         </div>
       </header>
 

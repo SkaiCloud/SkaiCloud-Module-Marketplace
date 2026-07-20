@@ -18,6 +18,19 @@ button, input { font: inherit; }
 .eyebrow { margin: 0 0 9px; color: #a999ff; font-size: 11px; font-weight: 750; letter-spacing: .15em; text-transform: uppercase; }
 h1 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacing: -.045em; }
 .subtitle { max-width: 600px; margin: 13px 0 0; color: var(--muted); line-height: 1.6; }
+.header-side { display: grid; justify-items: end; gap: 10px; }
+.connection { display: flex; align-items: center; gap: 10px; min-width: 238px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 11px; color: var(--text); background: rgba(17, 20, 27, .72); cursor: pointer; text-align: left; }
+.connection:hover { border-color: #3a4050; background: var(--panel-strong); }
+.connection-dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: #8b92a3; box-shadow: 0 0 0 4px rgba(139, 146, 163, .1); }
+.connection-copy { display: grid; gap: 2px; }
+.connection-copy strong { font-size: 11px; }
+.connection-copy > span { color: var(--muted); font-size: 10px; }
+.connection.connected { border-color: rgba(24, 182, 164, .28); }
+.connection.connected .connection-dot { background: #43d3c1; box-shadow: 0 0 0 4px rgba(24, 182, 164, .12); }
+.connection.failed { border-color: rgba(228, 96, 124, .28); }
+.connection.failed .connection-dot { background: #e4607c; box-shadow: 0 0 0 4px rgba(228, 96, 124, .12); }
+.connection.checking .connection-dot { animation: connection-pulse 1.1s ease-in-out infinite; }
+@keyframes connection-pulse { 50% { opacity: .35; } }
 .summary { display: flex; align-items: center; gap: 20px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(17, 20, 27, .72); }
 .summary > div { min-width: 64px; }
 .summary > div + div { padding-left: 20px; border-left: 1px solid var(--line); }
@@ -55,4 +68,4 @@ h1 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacin
 .note { display: flex; gap: 10px; align-items: center; margin-top: 22px; padding: 12px 14px; border: 1px solid #262c39; border-radius: 11px; color: #8d95a7; background: #0d1016; font-size: 11px; line-height: 1.5; }
 .note::before { content: ""; width: 6px; height: 6px; flex: 0 0 auto; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 4px rgba(124, 92, 255, .12); }
 @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls { flex-direction: column; } }
-@media (max-width: 640px) { .shell { padding: 28px 18px 44px; } .header { align-items: flex-start; flex-direction: column; } .grid { grid-template-columns: 1fr; } .summary { width: 100%; } }
+@media (max-width: 640px) { .shell { padding: 28px 18px 44px; } .header { align-items: flex-start; flex-direction: column; } .header-side, .connection, .summary { width: 100%; } .header-side { justify-items: stretch; } .grid { grid-template-columns: 1fr; } }

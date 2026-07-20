@@ -12,6 +12,12 @@ let selectedCategory = "All";
 const searchInput = document.querySelector("#search");
 const categoryRoot = document.querySelector("#categories");
 const catalogRoot = document.querySelector("#catalog");
+const commandStatus = document.querySelector("#command-status");
+const commandStatusLabel = document.querySelector("#command-status-label");
+const commandStatusDetail = document.querySelector("#command-status-detail");
+const runtimeChannel = "skaicloud-module-runtime-v1";
+let commandRequestId = null;
+let commandRequestTimeout = null;
 
 function escapeHtml(value) {
   return value.replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
@@ -59,6 +65,51 @@ categoryRoot.addEventListener("click", (event) => {
   renderCatalog();
 });
 searchInput.addEventListener("input", renderCatalog);
+
+function setCommandStatus(state, label, detail) {
+  commandStatus.className = `connection ${state}`;
+  commandStatusLabel.textContent = label;
+  commandStatusDetail.textContent = detail;
+}
+
+function requestCommandStatus() {
+  if (commandRequestTimeout) window.clearTimeout(commandRequestTimeout);
+  commandRequestId = `command-status-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  setCommandStatus("checking", "Checking Command", "Secure catalog connection");
+  window.parent.postMessage({
+    channel: runtimeChannel,
+    requestId: commandRequestId,
+    operation: "host.command.status",
+  }, "*");
+  commandRequestTimeout = window.setTimeout(() => {
+    commandRequestId = null;
+    setCommandStatus("failed", "Command unavailable", "Click to retry");
+  }, 10000);
+}
+
+window.addEventListener("message", (event) => {
+  const message = event.data;
+  if (event.source !== window.parent || !message || message.channel !== runtimeChannel) return;
+  if (message.type === "ready") {
+    requestCommandStatus();
+    return;
+  }
+  if (!commandRequestId || message.requestId !== commandRequestId) return;
+  window.clearTimeout(commandRequestTimeout);
+  commandRequestTimeout = null;
+  commandRequestId = null;
+  const result = message.result;
+  if (!message.ok || !result || result.connected !== true) {
+    const detail = result?.status === "unconfigured" ? "Connection is not configured" : "Click to retry";
+    setCommandStatus("failed", "Command unavailable", detail);
+    return;
+  }
+  const count = Number.isInteger(result.moduleCount) ? result.moduleCount : 0;
+  const timing = Number.isInteger(result.responseMs) ? ` · ${result.responseMs} ms` : "";
+  setCommandStatus("connected", "Command connected", `${count} published ${count === 1 ? "module" : "modules"}${timing}`);
+});
+
+commandStatus.addEventListener("click", requestCommandStatus);
 
 document.querySelector("#available-count").textContent = modules.length;
 document.querySelector("#enabled-count").textContent = modules.filter((module) => module.status === "Enabled").length;
