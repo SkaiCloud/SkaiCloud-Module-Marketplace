@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "key": "marketplace",
   "name": "Module Marketplace",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Discover, inspect, and manage trusted SkaiCloud module packages through the metadata-first review workflow.",
   "compatibility": {
     "minimumBuild": 6000,
@@ -60,7 +60,7 @@
       }
     ],
     "publisher": "SkaiCloud Network LLC",
-    "checksum": "sha256:e54b57a730a1ea14f54556ed926ee6ece69bd8aba8fc1a9998c59c31e0400937",
+    "checksum": "sha256:3f4e65a5037881961b70e000d8f0f18c21b3101267a82ba1bcc975bc996b956d",
     "signature": "package/SIGNATURE.txt",
     "runtime": {
       "mode": "sandboxed-iframe",
