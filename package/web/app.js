@@ -12,6 +12,7 @@ const runtimeChannel = "skaicloud-module-runtime-v1";
 const accentColors = ["#26b5c7", "#2ea66f", "#dc8b2d", "#d05f75", "#4e87d8", "#8a6bd1"];
 let commandRequestId = null;
 let commandRequestTimeout = null;
+let purchaseRequestId = null;
 
 function cleanText(value, fallback = "") {
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
@@ -50,6 +51,7 @@ function normalizeModule(value) {
     },
     requiredModules: cleanList(value.requiredModules),
     features: cleanList(value.features),
+    entitled: value.entitled === true,
   };
 }
 
@@ -84,7 +86,7 @@ function formatPricing(module) {
   if (module.pricing.model === "included") return "Included";
   if (module.pricing.priceCents === null) return module.pricing.model === "one_time" ? "One-time" : "Subscription";
   const amount = new Intl.NumberFormat("en-US", { style: "currency", currency: module.pricing.currency }).format(module.pricing.priceCents / 100);
-  return module.pricing.model === "one_time" ? amount : `${amount} subscription`;
+  return module.pricing.model === "one_time" ? `${amount} one-time` : `${amount} subscription`;
 }
 
 function renderCategories() {
@@ -98,6 +100,12 @@ function detailMarkup(module) {
     ? `<ul>${module.features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}</ul>`
     : "<p>No feature list has been supplied yet.</p>";
   const dependencies = module.requiredModules.length ? module.requiredModules.join(", ") : "None";
+  const purchasable = module.status === "published" && module.pricing.model === "one_time" && Number.isInteger(module.pricing.priceCents) && module.pricing.priceCents > 0;
+  const purchaseAction = module.entitled
+    ? '<span class="owned" aria-label="Module owned">Owned</span>'
+    : purchasable
+      ? `<button type="button" class="purchase" data-purchase="${escapeHtml(module.moduleKey)}">Buy once — ${escapeHtml(new Intl.NumberFormat("en-US", { style: "currency", currency: module.pricing.currency }).format(module.pricing.priceCents / 100))}</button>`
+      : "";
   return `<div class="details" data-details="${escapeHtml(module.moduleKey)}" hidden>
     <h4>Module details</h4>
     ${features}
@@ -108,6 +116,7 @@ function detailMarkup(module) {
       <div><dt>Module API</dt><dd>v${module.compatibility.moduleApiVersion}</dd></div>
       <div><dt>Dependencies</dt><dd>${escapeHtml(dependencies)}</dd></div>
     </dl>
+    ${purchaseAction}
   </div>`;
 }
 
@@ -159,6 +168,22 @@ categoryRoot.addEventListener("click", (event) => {
 });
 
 catalogRoot.addEventListener("click", (event) => {
+  const purchaseButton = event.target.closest("[data-purchase]");
+  if (purchaseButton) {
+    if (purchaseRequestId) return;
+    const moduleKey = purchaseButton.dataset.purchase;
+    purchaseRequestId = `command-purchase-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    purchaseButton.disabled = true;
+    purchaseButton.textContent = "Opening secure checkout...";
+    document.querySelector("#purchase-status").textContent = "Connecting to SkaiCloud Command...";
+    window.parent.postMessage({
+      channel: runtimeChannel,
+      requestId: purchaseRequestId,
+      operation: "host.command.purchase",
+      targetModuleKey: moduleKey,
+    }, "*");
+    return;
+  }
   const button = event.target.closest("[data-details-toggle]");
   if (!button) return;
   const moduleKey = button.dataset.detailsToggle;
@@ -201,6 +226,19 @@ window.addEventListener("message", (event) => {
   if (event.source !== window.parent || !message || message.channel !== runtimeChannel) return;
   if (message.type === "ready") {
     requestCommandCatalog();
+    return;
+  }
+  if (purchaseRequestId && message.requestId === purchaseRequestId) {
+    purchaseRequestId = null;
+    if (!message.ok) {
+      document.querySelector("#purchase-status").textContent = cleanText(message.error, "Unable to start module purchase.");
+      renderCatalog();
+      return;
+    }
+    const purchasedKey = cleanText(message.result?.moduleKey);
+    modules = modules.map((module) => module.moduleKey === purchasedKey ? { ...module, entitled: true } : module);
+    document.querySelector("#purchase-status").textContent = "This installation already owns the module.";
+    renderCatalog();
     return;
   }
   if (!commandRequestId || message.requestId !== commandRequestId) return;

@@ -37,6 +37,7 @@ h1 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacin
 .summary strong { display: block; font-size: 19px; }
 .summary span { color: var(--muted); font-size: 11px; }
 .controls { display: flex; gap: 12px; margin-bottom: 28px; }
+.purchase-status { min-height: 20px; margin: -14px 0 18px; color: #f0b35e; font-size: 12px; font-weight: 650; }
 .search { position: relative; flex: 1; }
 .search > span { position: absolute; top: 15px; left: 17px; width: 14px; height: 14px; border: 1.7px solid #737b8d; border-radius: 50%; }
 .search > span::after { content: ""; position: absolute; right: -5px; bottom: -3px; width: 6px; height: 1.7px; background: #737b8d; transform: rotate(45deg); }
@@ -70,6 +71,11 @@ h1 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacin
 .details dl div { display: flex; justify-content: space-between; gap: 12px; }
 .details dt { color: #676f80; }
 .details dd { margin: 0; color: #b8becc; text-align: right; }
+.purchase, .owned { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; margin-top: 14px; border-radius: 9px; padding: 0 14px; font-size: 12px; font-weight: 800; }
+.purchase { width: 100%; border: 1px solid #7561da; color: #fff; background: #6149d8; cursor: pointer; }
+.purchase:hover { background: #7058e3; }
+.purchase:disabled { cursor: wait; opacity: .65; }
+.owned { border: 1px solid rgba(24, 182, 164, .32); color: #62d9ca; background: rgba(24, 182, 164, .08); }
 .card-footer { margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--line); }
 .version { color: #676f80; font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .action { border: 0; padding: 8px 10px; border-radius: 8px; color: #ddd7ff; background: transparent; cursor: pointer; font-size: 11px; font-weight: 700; }

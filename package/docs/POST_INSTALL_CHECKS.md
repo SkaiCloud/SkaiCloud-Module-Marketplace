@@ -7,6 +7,8 @@
 5. Search for a module and confirm the result count updates.
 6. Select each category and confirm only matching modules remain.
 7. Confirm trust, compatibility, publisher, and lifecycle status are visible.
-8. Confirm `Review package` enters metadata inspection only and does not execute package code.
-9. Disable `marketplace` and confirm its navigation item is hidden.
-10. Confirm disabling the module does not remove registered module metadata.
+8. Confirm paid one-time modules show **Buy once** when unowned and **Owned** after Command entitlement refresh.
+9. In Stripe test mode, open Checkout and confirm cancellation does not grant ownership.
+10. Complete a Stripe test payment and confirm Command grants a permanent entitlement before installation.
+11. Disable `marketplace` and confirm its navigation item is hidden.
+12. Confirm disabling the module does not remove registered module metadata.
